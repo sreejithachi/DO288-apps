@@ -1,0 +1,262 @@
+https://rol.redhat.com/rol/rhz/login?offering=41553263
+
+sreejith.achi
+Win$
+
+Console Student student
+
+20191111-NA-DO288 (41553263)
+
+Username
+
+RHT_OCP4_DEV_USER
+sreejith-achi
+Password
+
+RHT_OCP4_DEV_PASSWORD
+86c11cac85594f438fa1f656fc057ecc
+API Endpoint
+
+RHT_OCP4_MASTER_API
+https://api.ocp-ap1.prod.nextcle.com:6443
+Console Web Application
+
+https://console-openshift-console.apps.ocp-ap1.prod.nextcle.com
+Cluster Id
+
+8671d745-ae81-4571-9b98-5091a3ffbcae
+
+
+oc login -u sreejith-achi -p 86c11cac85594f438fa1f656fc057ecc https://api.ocp-ap1.prod.nextcle.com:6443
+
+-----
+Containers:
+docker
+podman -- used by redhat 8
+lxc/lxd
+rocket
+
+
+------
+
+
+cgroup   linux namespaces
+
+
+application container vs os container
+
+
+
+resource types
+dc - deployment config
+rc - replication controller
+pod
+svc - service
+route
+is - image stream
+pvc - persistent volume chaing
+pv
+bc - build config
+secret
+con - config map
+template
+
+
+etcd on master store all the above configs
+
+
+oc create -f <FILE>.json
+oc create -f <FILE>.yaml
+
+
+
+resource definition:
+api version . eg. v1
+kind   : eg. pod
+metadata : eg. name: .... label:....
+spec: eg. image:.... , replicas:5, template:..
+
+
+oc new-app 
+a) --docker-image= <registry>[:<PORT>]/<group>/image[:tag]
+
+oc exposr pod <pod_name>  -> creates a service
+oc expose svc <service_name>  -> creates a route
+
+
+b) <src-code> 
+or
+<builer_image>~<src_code>
+or
+-i <builder-img> <src-code>  -- uses default builder image instead of the <builder-img> specified in case the <builder-img> doesn't suit the type of src code.
+
+
+
+oc login -u sreejith-achi -p 86c11cac85594f438fa1f656fc057ecc https://api.ocp-ap1.prod.nextcle.com:6443
+
+oc new-project <PROJ>
+oc project [<PROJ>]
+
+oc get project
+oc whoami
+oc logout
+
+
+oc <ACTION> <RESOURCE TYPE> [<NAME>]
+
+where
+ ACTION = get, delete, edit, logs(bc,dc,pods), describe, export
+ RT = all, pod, rc, dc, bc, svc, route,..
+    = events [-w]
+
+pg 26, 33, 47, 61
+
+ 	
+oc new-app --name <AppName> <src repo url> --context-dir <context-directory>
+oc start-build <appName>
+
+ 	
+oc get is -n openshift
+show all imagestreams under the namespace or project openshift
+
+
+Names:
+<app-name>  - bc, is, dc, svc
+<app_name>-<instancenumber>  - build, rc
+<app_name>-<instancenumber>-<uuid>  - pod
+                                      build
+                                      deploy
+
+
+  
+oc get bc/hello -o yaml
+oc logs -f bc/hello
+shows build logs
+
+
+oc rollout <dc_name> --- does a new deployment. rc number will be incremented
+
+
+DOCKER keywords:
+FROM 
+MAINTAINER
+EXPOSE
+ENV
+RUN
+ADD
+COPY
+ENTRYPOINT
+CMD
+
+
+oc rsh <pod-name>
+to connect to the pod terminal.
+
+developers.redhat.com
+
+
+ubi-minimal for microservices
+
+
+ONBUILD executed only when building a child image
+
+
+oc create serviceaccount myserviceaccount
+
+oc patch dc/demo-app --patch '('spec
+
+or
+oc edit dc/demo-app
+under template spec sericeAccountName myserviceaccount
+
+oc adm policy add-scc-to-user anyutil myserviceaccount
+
+
+
+pg 90
+
+oc setenv
+
+
+To show base64 encrypted/decrypted values:
+echo -n kljsdfk | base64 -d
+echo -n uname | base64
+
+oc set env dc hw --from secret/mysecret
+
+oc set volume dc hw --add -t configmap -m /mydir --configmap
+
+
+
+read -p "PASSWORD: " -s password
+
+skopeo
+ to manage registries
+
+
+pg 134, 144, 155, 159
+
+
+oc set build-hook bc/name --post-commit --command -- bundle exec rube test --verbose
+oc set build-hook bc/name --post-commit --script="curl http://api.com/user/${USER}"
+
+
+S2I preference:
+1) Dockerfile                  docker
+2) pom.xml                     jee
+3) app.json, package.json      node js
+4) composer.json, index.php    php
+
+https://feedback.iverson.com.my/firstday
+class id : 20014
+
+pushd /tmp > /dev/null
+popd > /dev/null
+goes back to the previous directory
+
+
+pg 229, 240
+
+du -shc 
+linux command to see the size of the current directory
+
+
+Service name local url domain names will be stored under:
+cat /etc/resolv.conf
+
+format
+<SERVICE_NAME>.<PROJ>.svc.cluster.local
+eg.
+curl http://hw.hw.svc.cluster.local:8080
+
+
+materials.example.com
+
+
+pg 366,382
+
+
+in 4.0, install template service broker to see the create template option in ui.
+in 3.x, its available by default.
+
+
+ONE_SERVICE_HOST
+
+
+
+oc get pod one-1-5995n -o yaml --export -n one > two.yaml
+edit this yaml and then can create the new pod using this
+oc create -f two.yaml
+
+
+
+
+feedback.iverson.com.my/ifs
+class id: 20014
+
+Kelvin Lai Kok Foong
++6012-295 9502
+
+kelvin@myrc.biz
+kelvinlnx@yahoo.com
+kelvinlnx@gmail.com
